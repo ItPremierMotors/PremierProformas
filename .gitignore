@@ -9,5 +9,4 @@ obj/
 
 # Secretos y datos locales
 .env
-data/
 *.db
