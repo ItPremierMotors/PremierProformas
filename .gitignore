@@ -1,0 +1,13 @@
+# Compilados
+bin/
+obj/
+
+# IDE
+.vs/
+.vscode/
+*.user
+
+# Secretos y datos locales
+.env
+data/
+*.db

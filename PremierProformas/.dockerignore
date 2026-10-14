@@ -1,0 +1,15 @@
+# Archivos y carpetas que Docker NO debe copiar con "COPY . ."
+
+# Compilados de Windows: se vuelven a generar dentro del contenedor
+bin/
+obj/
+
+# Historial de Git: no hace falta para compilar y pesa mucho
+.git/
+
+# Configuración de Visual Studio / VS Code
+.vs/
+.vscode/
+
+# Contraseñas: nunca deben quedar dentro de la imagen
+.env

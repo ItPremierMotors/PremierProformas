@@ -1,0 +1,105 @@
+# =====================================================================
+#  DOCKER COMPOSE - PremierProformas
+#  Define TODOS los contenedores de esta app y cómo se conectan.
+#  Se levanta con:  docker compose up -d --build
+#  IMPORTANTE: en YAML la sangría (espacios) importa. Usa espacios, nunca TAB.
+# =====================================================================
+
+# Nombre del stack. Así aparece en Portainer (columna "Stack").
+# Si no lo pones, Compose usa el nombre de la carpeta.
+name: proformas
+
+# "services" = la lista de contenedores que forman la app.
+services:
+
+  # -------------------------------------------------------------------
+  #  1) LA APP MVC (se construye con tu Dockerfile)
+  # -------------------------------------------------------------------
+  proformas-app:
+    # build: ./PremierProformas -> "construye la imagen con el Dockerfile de esa carpeta".
+    # Aquí es donde se conectan Dockerfile y Compose.
+    build: ./PremierProformas
+
+    # Nombre fijo del contenedor (si no lo pones, Compose genera uno largo).
+    container_name: proformas-app
+
+    # Puertos "SERVIDOR:CONTENEDOR".
+    # 8001 = el que escribes en el navegador (http://192.168.42.110:8001)
+    # 8080 = donde escucha la app por dentro (ASPNETCORE_URLS del Dockerfile)
+    ports:
+      - "8001:8080"
+
+    # Variables de entorno que recibe la app.
+    # En .NET, "__" (doble guion bajo) equivale a ":" en appsettings.json.
+    # O sea, esto llena:  "ConnectionStrings": { "DefaultConnection": "..." }
+    # ${DB_PASSWORD} se lee del archivo .env (así la clave no queda en GitHub).
+    # Host=proformas-db -> los contenedores se encuentran por NOMBRE de servicio,
+    # no por IP. Compose crea una red interna donde ese nombre funciona como DNS.
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=proformas-db;Port=5432;Database=proformas;Username=proformas;Password=${DB_PASSWORD}"
+
+    # Orden de arranque: la app espera a que la base de datos esté "healthy"
+    # (lista para recibir conexiones), no solo encendida.
+    depends_on:
+      proformas-db:
+        condition: service_healthy
+
+    # Si el contenedor se cae o el servidor se reinicia, Docker lo vuelve a
+    # levantar solo. Solo se queda apagado si TÚ lo detienes manualmente.
+    restart: unless-stopped
+
+
+  # -------------------------------------------------------------------
+  #  2) BASE DE DATOS POSTGRESQL (imagen ya hecha, no necesita Dockerfile)
+  # -------------------------------------------------------------------
+  proformas-db:
+    # Imagen oficial de PostgreSQL versión 17, descargada de Docker Hub.
+    image: postgres:17
+    container_name: proformas-db
+
+    # La imagen de Postgres usa estas variables para crear, la PRIMERA vez,
+    # la base de datos, el usuario y su contraseña.
+    environment:
+      POSTGRES_DB: proformas
+      POSTGRES_USER: proformas
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TZ: America/Tegucigalpa
+
+    # VOLUMES = carpeta del SERVIDOR : carpeta del CONTENEDOR.
+    # Los datos de Postgres se guardan en tu disco de datos.
+    # Así, si borras o recreas el contenedor, las proformas NO se pierden.
+    volumes:
+      - /srv/almacenamiento/apps/proformas-data/pgdata:/var/lib/postgresql/data
+
+    # Sin "ports:" a propósito: la base NO se expone a la red de la oficina.
+    # Solo la app (y el adminer de abajo) pueden llegar a ella. Más seguro.
+
+    # HEALTHCHECK = prueba que Docker corre cada cierto tiempo para saber
+    # si el servicio está sano. pg_isready responde OK cuando Postgres ya
+    # acepta conexiones. Por esto en Portainer aparece "healthy".
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U proformas -d proformas"]
+      interval: 10s     # cada cuánto revisa
+      timeout: 5s       # cuánto espera la respuesta
+      retries: 5        # fallos seguidos antes de marcarlo "unhealthy"
+
+    restart: unless-stopped
+
+
+  # -------------------------------------------------------------------
+  #  3) ADMINER (opcional) - ver/editar las tablas desde el navegador
+  # -------------------------------------------------------------------
+  proformas-adminer:
+    image: adminer
+    container_name: proformas-adminer
+    # 8082 en el servidor (8080 y 8081 ya los usa el validador SAR).
+    # Entras con: servidor = proformas-db, usuario = proformas, clave del .env
+    ports:
+      - "8082:8080"
+    depends_on:
+      - proformas-db
+    restart: unless-stopped
+
+# No hace falta declarar "networks": Compose crea automáticamente una red
+# privada (proformas_default) y conecta ahí los 3 servicios.
+# Por eso la red del validador SAR y esta quedan separadas entre sí.
