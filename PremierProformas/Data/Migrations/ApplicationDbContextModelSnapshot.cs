@@ -25,107 +25,134 @@ namespace PremierProformas.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_roles");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("asp_net_roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("role_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_role_claims");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_role_claims_role_id");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("asp_net_role_claims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("id");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("access_failed_count");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("email_confirmed");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("lockout_enabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lockout_end");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_email");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_user_name");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("phone_number_confirmed");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("security_stamp");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("two_factor_enabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("user_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_users");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -134,528 +161,739 @@ namespace PremierProformas.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("asp_net_users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_user_claims");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_claims_user_id");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("asp_net_user_claims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("login_provider");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("provider_key");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("provider_display_name");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("LoginProvider", "ProviderKey")
+                        .HasName("pk_asp_net_user_logins");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_logins_user_id");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("asp_net_user_logins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("role_id");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("UserId", "RoleId")
+                        .HasName("pk_asp_net_user_roles");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_user_roles_role_id");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("asp_net_user_roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("login_provider");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("name");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "Name")
+                        .HasName("pk_asp_net_user_tokens");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("asp_net_user_tokens", (string)null);
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Cliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<string>("Correo")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("correo");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<string>("Dni")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("dni");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("NombreCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("nombre_completo");
 
                     b.Property<string>("Rtn")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("rtn");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("telefono");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_clientes");
 
                     b.HasIndex("Dni")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_clientes_dni");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("clientes", (string)null);
                 });
 
             modelBuilder.Entity("PremierProformas.Models.CorrelativoProforma", b =>
                 {
                     b.Property<int>("SucursalId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("sucursal_id");
 
                     b.Property<int>("Anio")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("anio");
 
                     b.Property<int>("UltimoNumero")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("ultimo_numero");
 
-                    b.HasKey("SucursalId", "Anio");
+                    b.HasKey("SucursalId", "Anio")
+                        .HasName("pk_correlativos_proforma");
 
-                    b.ToTable("CorrelativosProforma");
+                    b.ToTable("correlativos_proforma", (string)null);
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Marca", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 6L, null, null, null, null, null);
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<string>("LogoArchivo")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("logo_archivo");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nombre");
 
                     b.Property<string>("Prefijo")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("prefijo");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_marcas");
 
                     b.HasIndex("Nombre")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_marcas_nombre");
 
-                    b.ToTable("Marcas");
+                    b.ToTable("marcas", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activo = true,
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LogoArchivo = "changan.png",
+                            Nombre = "CHANGAN",
+                            Prefijo = "CH"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Activo = true,
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LogoArchivo = "greatwall.png",
+                            Nombre = "GREAT WALL",
+                            Prefijo = "GR"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Activo = true,
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LogoArchivo = "haval.png",
+                            Nombre = "HAVAL",
+                            Prefijo = "HA"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Activo = true,
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LogoArchivo = "zxauto.png",
+                            Nombre = "ZXAUTO",
+                            Prefijo = "ZX"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Activo = true,
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LogoArchivo = "deepal.png",
+                            Nombre = "DEEPAL",
+                            Prefijo = "DE"
+                        });
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Proforma", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<int>("ClienteId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("cliente_id");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<int>("DiasVigencia")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("dias_vigencia");
 
                     b.Property<string>("DirigidoA")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("dirigido_a");
 
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("estado");
 
                     b.Property<DateOnly>("FechaEmision")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_emision");
 
                     b.Property<decimal>("Isv")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("isv");
 
                     b.Property<string>("JefeVentasNombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("jefe_ventas_nombre");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("numero");
 
                     b.Property<decimal>("PrecioConIsv")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("precio_con_isv");
 
                     b.Property<decimal>("PrecioSinIsv")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("precio_sin_isv");
 
                     b.Property<decimal>("PrecioUsd")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("precio_usd");
 
                     b.Property<decimal>("PrecioVenta")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("precio_venta");
 
                     b.Property<decimal>("Prima")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("prima");
 
                     b.Property<decimal>("SaldoFinanciar")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("numeric(14,2)")
+                        .HasColumnName("saldo_financiar");
 
                     b.Property<int>("SucursalId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("sucursal_id");
 
                     b.Property<decimal>("TasaCambio")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasPrecision(10, 4)
+                        .HasColumnType("numeric(10,4)")
+                        .HasColumnName("tasa_cambio");
 
                     b.Property<int>("VehiculoId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("vehiculo_id");
 
                     b.Property<int>("VendedorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("vendedor_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_proformas");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteId")
+                        .HasDatabaseName("ix_proformas_cliente_id");
 
                     b.HasIndex("Numero")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_proformas_numero");
 
-                    b.HasIndex("SucursalId");
+                    b.HasIndex("SucursalId")
+                        .HasDatabaseName("ix_proformas_sucursal_id");
 
-                    b.HasIndex("VehiculoId");
+                    b.HasIndex("VehiculoId")
+                        .HasDatabaseName("ix_proformas_vehiculo_id");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("VendedorId")
+                        .HasDatabaseName("ix_proformas_vendedor_id");
 
-                    b.ToTable("Proformas");
+                    b.ToTable("proformas", (string)null);
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Sucursal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("Id"), 3L, null, null, null, null, null);
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("codigo");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("direccion");
 
                     b.Property<int?>("JefeVentasId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("jefe_ventas_id");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nombre");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("telefono");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_sucursales");
 
                     b.HasIndex("Codigo")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_sucursales_codigo");
 
-                    b.HasIndex("JefeVentasId");
+                    b.HasIndex("JefeVentasId")
+                        .HasDatabaseName("ix_sucursales_jefe_ventas_id");
 
-                    b.ToTable("Sucursales");
+                    b.ToTable("sucursales", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Activo = true,
+                            Codigo = "SPS",
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Direccion = "Col. Las Mesetas, 21 calle, 17 ave. Dos cuadras arriba de CEMESA",
+                            Nombre = "San Pedro Sula",
+                            Telefono = "2556-5019"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Activo = true,
+                            Codigo = "TGU",
+                            CreadoEn = new DateTime(2026, 10, 14, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Direccion = "",
+                            Nombre = "Tegucigalpa",
+                            Telefono = ""
+                        });
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Vehiculo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<int>("Anio")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("anio");
 
                     b.Property<int?>("CapacidadPasajeros")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("capacidad_pasajeros");
 
                     b.Property<string>("Chasis")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("chasis");
 
                     b.Property<string>("Cilindraje")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("cilindraje");
 
                     b.Property<string>("CodigoInventario")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("codigo_inventario");
 
                     b.Property<string>("Color")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("color");
 
                     b.Property<string>("Combustible")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("combustible");
 
                     b.Property<string>("Comentarios")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("comentarios");
 
                     b.Property<string>("Condicion")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("condicion");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("descripcion");
 
                     b.Property<string>("Estatus")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("estatus");
 
                     b.Property<string>("FacturaExterna")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("factura_externa");
 
                     b.Property<DateOnly?>("FechaIngreso")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_ingreso");
 
                     b.Property<string>("Garantia")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("garantia");
 
                     b.Property<int>("MarcaId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("marca_id");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modelo");
 
                     b.Property<string>("ModeloComercial")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modelo_comercial");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("Motor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("motor");
 
                     b.Property<string>("NumeroDuca")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("numero_duca");
 
                     b.Property<string>("PolizaImportacion")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("poliza_importacion");
 
                     b.Property<int?>("Puertas")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("puertas");
 
                     b.Property<string>("Tipo")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("tipo");
 
                     b.Property<string>("Transmision")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("transmision");
 
                     b.Property<string>("Ubicacion")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("ubicacion");
 
                     b.Property<string>("Vin")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("vin");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_vehiculos");
 
                     b.HasIndex("CodigoInventario")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_vehiculos_codigo_inventario");
 
-                    b.HasIndex("MarcaId");
+                    b.HasIndex("MarcaId")
+                        .HasDatabaseName("ix_vehiculos_marca_id");
 
                     b.HasIndex("Vin")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_vehiculos_vin");
 
-                    b.ToTable("Vehiculos");
+                    b.ToTable("vehiculos", (string)null);
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Vendedor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo");
 
                     b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creado_en");
 
                     b.Property<string>("CreadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creado_por");
 
                     b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modificado_en");
 
                     b.Property<string>("ModificadoPor")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("modificado_por");
 
                     b.Property<string>("NombreCompleto")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("nombre_completo");
 
                     b.Property<int>("SucursalId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("sucursal_id");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("usuario_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_vendedores");
 
-                    b.HasIndex("SucursalId");
+                    b.HasIndex("SucursalId")
+                        .HasDatabaseName("ix_vendedores_sucursal_id");
 
                     b.HasIndex("UsuarioId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_vendedores_usuario_id");
 
-                    b.ToTable("Vendedores");
+                    b.ToTable("vendedores", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -664,7 +902,8 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_role_claims_asp_net_roles_role_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -673,7 +912,8 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_claims_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -682,7 +922,8 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_logins_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -691,13 +932,15 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -706,7 +949,18 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("PremierProformas.Models.CorrelativoProforma", b =>
+                {
+                    b.HasOne("PremierProformas.Models.Sucursal", null)
+                        .WithMany()
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_correlativos_proforma_sucursales_sucursal_id");
                 });
 
             modelBuilder.Entity("PremierProformas.Models.Proforma", b =>
@@ -715,25 +969,29 @@ namespace PremierProformas.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_proformas_clientes_cliente_id");
 
                     b.HasOne("PremierProformas.Models.Sucursal", "Sucursal")
                         .WithMany()
                         .HasForeignKey("SucursalId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_proformas_sucursales_sucursal_id");
 
                     b.HasOne("PremierProformas.Models.Vehiculo", "Vehiculo")
                         .WithMany()
                         .HasForeignKey("VehiculoId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_proformas_vehiculos_vehiculo_id");
 
                     b.HasOne("PremierProformas.Models.Vendedor", "Vendedor")
                         .WithMany()
                         .HasForeignKey("VendedorId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_proformas_vendedores_vendedor_id");
 
                     b.Navigation("Cliente");
 
@@ -749,7 +1007,8 @@ namespace PremierProformas.Data.Migrations
                     b.HasOne("PremierProformas.Models.Vendedor", "JefeVentas")
                         .WithMany()
                         .HasForeignKey("JefeVentasId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_sucursales_vendedores_jefe_ventas_id");
 
                     b.Navigation("JefeVentas");
                 });
@@ -760,7 +1019,8 @@ namespace PremierProformas.Data.Migrations
                         .WithMany("Vehiculos")
                         .HasForeignKey("MarcaId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_vehiculos_marcas_marca_id");
 
                     b.Navigation("Marca");
                 });
@@ -771,7 +1031,14 @@ namespace PremierProformas.Data.Migrations
                         .WithMany("Vendedores")
                         .HasForeignKey("SucursalId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_vendedores_sucursales_sucursal_id");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_vendedores_asp_net_users_usuario_id");
 
                     b.Navigation("Sucursal");
                 });

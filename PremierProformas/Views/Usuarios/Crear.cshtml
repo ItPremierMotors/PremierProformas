@@ -1,0 +1,59 @@
+@model PremierProformas.ViewModels.CrearUsuarioViewModel
+@{
+    ViewData["Title"] = "Crear usuario";
+}
+
+<h1 class="h3 mb-3">Crear usuario</h1>
+<form asp-action="Crear" method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label">Correo electrónico</label>
+        <input asp-for="Email" class="form-control" autocomplete="username" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Password" class="form-label">Contraseña inicial</label>
+        <input asp-for="Password" class="form-control" autocomplete="new-password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Role" class="form-label">Rol</label>
+        <select asp-for="Role" asp-items="ViewBag.Roles" class="form-select">
+            <option value="">Selecciona un rol</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+    <fieldset class="col-12">
+        <legend class="h5">Vendedor y sucursal</legend>
+        <p class="text-muted">Para roles de ventas, vincula un vendedor existente o registra uno nuevo.</p>
+        <div class="col-md-6 mb-3">
+            <label asp-for="VendedorId" class="form-label">Vendedor existente</label>
+            <select asp-for="VendedorId" asp-items="ViewBag.Vendedores" class="form-select">
+                <option value="">Sin vincular</option>
+            </select>
+            <span asp-validation-for="VendedorId" class="text-danger"></span>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="NombreVendedor" class="form-label">Nombre para crear vendedor</label>
+                <input asp-for="NombreVendedor" class="form-control" />
+                <span asp-validation-for="NombreVendedor" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="SucursalId" class="form-label">Sucursal</label>
+                <select asp-for="SucursalId" asp-items="ViewBag.Sucursales" class="form-select">
+                    <option value="">Selecciona una sucursal</option>
+                </select>
+                <span asp-validation-for="SucursalId" class="text-danger"></span>
+            </div>
+        </div>
+    </fieldset>
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Crear usuario</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

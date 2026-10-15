@@ -32,11 +32,13 @@ services:
     # Variables de entorno que recibe la app.
     # En .NET, "__" (doble guion bajo) equivale a ":" en appsettings.json.
     # O sea, esto llena:  "ConnectionStrings": { "DefaultConnection": "..." }
-    # ${DB_PASSWORD} se lee del archivo .env (así la clave no queda en GitHub).
+    # ${DB_PASSWORD}, ${ADMIN_EMAIL} y ${ADMIN_PASSWORD} se leen de .env.
     # Host=proformas-db -> los contenedores se encuentran por NOMBRE de servicio,
     # no por IP. Compose crea una red interna donde ese nombre funciona como DNS.
     environment:
       ConnectionStrings__DefaultConnection: "Host=proformas-db;Port=5432;Database=proformas;Username=proformas;Password=${DB_PASSWORD}"
+      Admin__Email: ${ADMIN_EMAIL}
+      Admin__Password: ${ADMIN_PASSWORD}
 
     # Orden de arranque: la app espera a que la base de datos esté "healthy"
     # (lista para recibir conexiones), no solo encendida.
