@@ -3,9 +3,19 @@
     ViewData["Title"] = "Usuarios";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Usuarios</h1>
-    <a class="btn btn-primary" asp-action="Crear">Crear usuario</a>
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">SEGURIDAD <span>/</span> ACCESOS</p>
+        <h1>Usuarios</h1>
+        <p class="page-subtitle">Administra cuentas, roles y asignaciones de equipo.</p>
+    </div>
+    <a class="btn btn-primary create-user-button" asp-action="Crear"><span aria-hidden="true">+</span> Crear usuario</a>
+</section>
+
+<div class="user-summary" aria-label="Resumen de usuarios">
+    <div class="summary-cell"><span class="summary-label">CUENTAS</span><strong>@Model.Count</strong></div>
+    <div class="summary-cell"><span class="summary-label">ACTIVAS</span><strong>@Model.Count(usuario => usuario.Activo)</strong></div>
+    <div class="summary-cell"><span class="summary-label">DESACTIVADAS</span><strong>@Model.Count(usuario => !usuario.Activo)</strong></div>
 </div>
 
 @if (TempData["Mensaje"] is string mensaje)
@@ -17,42 +27,46 @@
     <div class="alert alert-danger" role="alert">@error</div>
 }
 
-<div class="table-responsive">
-    <table class="table table-striped align-middle">
+<div class="users-table-wrap">
+    <table class="table users-table align-middle">
         <thead>
             <tr>
-                <th>Correo</th>
-                <th>Rol</th>
-                <th>Vendedor</th>
-                <th>Sucursal</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Sucursal</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
         @foreach (var usuario in Model)
         {
             <tr>
-                <td>@usuario.Email</td>
-                <td>@usuario.Roles</td>
+                <td><span class="user-email">@usuario.Email</span></td>
+                <td><span class="role-label">@usuario.Roles</span></td>
                 <td>@(usuario.Vendedor ?? "-")</td>
                 <td>@(usuario.Sucursal ?? "-")</td>
-                <td>@(usuario.Activo ? "Activo" : "Desactivado")</td>
-                <td>
-                    <div class="d-flex flex-wrap gap-2">
-                        <form asp-action="CambiarEstado" method="post">
+                <td><span class="status-label @(usuario.Activo ? "is-active" : "is-disabled")"><span></span>@(usuario.Activo ? "Activo" : "Desactivado")</span></td>
+                <td class="user-actions-cell">
+                    <div class="user-actions">
+                        <form asp-action="CambiarEstado" method="post" class="inline-form">
                             <input type="hidden" name="id" value="@usuario.Id" />
                             <input type="hidden" name="activar" value="@(!usuario.Activo)" />
-                            <button class="btn btn-sm btn-outline-secondary" type="submit">
+                            <button class="btn btn-sm btn-outline-secondary state-button" type="submit">
                                 @(usuario.Activo ? "Desactivar" : "Activar")
                             </button>
                         </form>
-                        <form asp-action="RestablecerContrasena" method="post" class="d-flex gap-1">
-                            <input type="hidden" name="id" value="@usuario.Id" />
-                            <input class="form-control form-control-sm" type="password" name="nuevaContrasena"
-                                   minlength="8" autocomplete="new-password" placeholder="Nueva contraseña" required />
-                            <button class="btn btn-sm btn-outline-primary" type="submit">Restablecer</button>
-                        </form>
+                        <details class="reset-details">
+                            <summary class="btn btn-sm btn-outline-primary">Cambiar contraseña</summary>
+                            <form asp-action="RestablecerContrasena" method="post" class="reset-form">
+                                <label class="form-label" for="password-@usuario.Id">Nueva contraseña</label>
+                                <input id="password-@usuario.Id" class="form-control form-control-sm" type="password" name="nuevaContrasena"
+                                       minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required />
+                                <input type="hidden" name="id" value="@usuario.Id" />
+                                <button class="btn btn-primary btn-sm" type="submit">Guardar contraseña</button>
+                            </form>
+                        </details>
                     </div>
                 </td>
             </tr>

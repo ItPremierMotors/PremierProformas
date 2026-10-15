@@ -3,8 +3,14 @@
     ViewData["Title"] = "Crear usuario";
 }
 
-<h1 class="h3 mb-3">Crear usuario</h1>
-<form asp-action="Crear" method="post" class="row g-3">
+<section class="page-heading compact-heading">
+    <div>
+        <p class="eyebrow">SEGURIDAD <span>/</span> NUEVA CUENTA</p>
+        <h1>Crear usuario</h1>
+        <p class="page-subtitle">Configura el acceso y su relación con el equipo comercial.</p>
+    </div>
+</section>
+<form asp-action="Crear" method="post" class="user-form row g-3">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="col-md-6">
         <label asp-for="Email" class="form-label">Correo electrónico</label>
@@ -23,9 +29,9 @@
         </select>
         <span asp-validation-for="Role" class="text-danger"></span>
     </div>
-    <fieldset class="col-12">
-        <legend class="h5">Vendedor y sucursal</legend>
-        <p class="text-muted">Para roles de ventas, vincula un vendedor existente o registra uno nuevo.</p>
+    <fieldset class="col-12 seller-fieldset">
+        <legend>Vendedor y sucursal</legend>
+        <p>Para roles de ventas, vincula un vendedor existente o registra uno nuevo.</p>
         <div class="col-md-6 mb-3">
             <label asp-for="VendedorId" class="form-label">Vendedor existente</label>
             <select asp-for="VendedorId" asp-items="ViewBag.Vendedores" class="form-select">

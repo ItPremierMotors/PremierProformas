@@ -4,29 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Premier Motors - Proformas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PremierProformas.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="app-header">
+        <nav class="navbar navbar-expand-sm app-navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Premier Motors - Proformas</a>
+                <a class="navbar-brand brand-lockup" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="brand-mark" aria-hidden="true">PM</span>
+                    <span class="brand-copy"><strong>Premier Motors</strong><small>PROFORMAS · HONDURAS</small></span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Abrir menú">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav app-nav-links flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Usuarios" ? "active" : "")" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
                             </li>
                         }
                     </ul>
@@ -35,15 +41,17 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="app-content">
+        <main role="main" class="app-main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Premier Motors - Proformas
+    <footer class="app-footer">
+        <div class="container-fluid">
+            <span class="footer-mark">PM</span>
+            <span>Premier Motors <span class="footer-divider">/</span> Proformas</span>
+            <span class="footer-meta">Honduras · 2026</span>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
